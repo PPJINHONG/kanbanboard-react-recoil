@@ -1,23 +1,39 @@
 import React from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import {hourselector, minutestate} from './atom';
+import { DragDropContext, Droppable,Draggable} from 'react-beautiful-dnd';
 
 function App() {
+  const dragend = () => {
 
-  const [minutes,setminutes] = useRecoilState(minutestate);
-  const [hour,sethour] = useRecoilState(hourselector);
-  const setminutesfn =(event:React.FormEvent<HTMLInputElement>) => {
-    setminutes(+event.currentTarget.value);
-  };
-  const sethourfn =(event:React.FormEvent<HTMLInputElement>) => {
-    sethour(+event.currentTarget.value);
   };
 
   return (
     <>
-    <input value={minutes} onChange={setminutesfn} type="number" placeholder='minutes'></input>
-    <input value={hour} onChange={sethourfn} type="number" placeholder='hour'></input>
-    </>
+    <DragDropContext onDragEnd={dragend}>
+      <div>
+    <Droppable droppableId='one'>
+      {(magic) => <ul ref={magic.innerRef}{...magic.droppableProps}>
+        <Draggable draggableId='first' index={0}>
+          {(magic)=>
+          <li ref={magic.innerRef}
+          // {...magic.dragHandleProps}  특정부분 움직임허용
+          {...magic.draggableProps}>  
+           <span{...magic.dragHandleProps}>ooooo</span>
+           helllo
+           </li>}
+            </Draggable>
+        <Draggable draggableId='second' index={1}> 
+         {(magic)=>
+          <li ref={magic.innerRef}
+          {...magic.draggableProps}//전체부분 허용
+          {...magic.dragHandleProps}>
+            fuck</li>}
+            </Draggable>
+        </ul>}
+    </Droppable>
+    </div>
+    </DragDropContext>
+  </>
   );
 }
 
