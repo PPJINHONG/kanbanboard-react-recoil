@@ -1,7 +1,9 @@
 import React from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { DragDropContext, Droppable,Draggable} from 'react-beautiful-dnd';
+import { DragDropContext, Droppable,Draggable, DropResult} from 'react-beautiful-dnd';
 import styled from 'styled-components';
+import { todostate } from './atom';
+import Draggablecard from './component/Draggablecard';
 
 const Wrapper = styled.div`
 display: flex;
@@ -24,18 +26,24 @@ padding: 30px;
 border-radius: 10px;
 border: 0.5px solid gray;
 `;
-const Card = styled.div`
-background-color: whitesmoke;
-padding: 10px;
-text-align: center;
-margin-bottom:10px;
-`;
 
 function App() {
-  const dragend = () => {
+  const [todos,settodo] = useRecoilState(todostate)
+  const dragend = ({draggableId,destination,source}:DropResult) => {
+    if (destination?.index === undefined) return;    
+      settodo((oldtodo) => {
+        const copy = [...oldtodo];
+        copy.splice(source.index,1);
+        console.log("ASdasd");
+        copy.splice(destination?.index,0,draggableId);
+        console.log(copy);
+        return copy;
+    
+    });
+    console.log(destination.index);
   };
-  const todos =["a","b","c","d","e","f"];
-  
+ 
+
   return (
     <>
     <DragDropContext onDragEnd={dragend}>
@@ -44,14 +52,7 @@ function App() {
     <Droppable droppableId='one'>
       {(magic) => <Board ref={magic.innerRef}{...magic.droppableProps}>
       {todos.map((todo,index)=>(
-        <Draggable draggableId={todo} index={index}>
-        {(magic)=>
-        <Card ref={magic.innerRef}
-         {...magic.dragHandleProps}  
-         {...magic.draggableProps}>  
-                 {todo}
-         </Card>}
-          </Draggable>
+        <Draggablecard key={todo} todo={todo} index={index} />
           ))}
           {magic.placeholder}
         </Board>}
