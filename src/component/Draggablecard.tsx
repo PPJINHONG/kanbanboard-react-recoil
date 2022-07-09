@@ -1,3 +1,5 @@
+import { memo } from "react";
+import React from 'react';
 import { Draggable } from "react-beautiful-dnd";
 import styled from "styled-components";
 
@@ -14,8 +16,9 @@ interface Idraggablecard{
 }
 
 function Draggablecard({todo,index} : Idraggablecard){
+      console.log(todo, "has been rendered")
     return(
-
+       
         <Draggable key={todo} draggableId={todo} index={index}>
         {(magic)=>
         <Card ref={magic.innerRef}
@@ -28,4 +31,4 @@ function Draggablecard({todo,index} : Idraggablecard){
     );
     
 }
-export default Draggablecard;
+export default React.memo(Draggablecard); //react memo 랜더링 제한
