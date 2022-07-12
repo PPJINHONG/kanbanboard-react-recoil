@@ -3,8 +3,8 @@ import React from 'react';
 import { Draggable } from "react-beautiful-dnd";
 import styled from "styled-components";
 
-const Card = styled.div`
-background-color: whitesmoke;
+const Card = styled.div<{isDragging : Boolean}>`
+background-color: ${prop=>prop.isDragging ? "red" : "white"};
 padding: 10px;
 text-align: center;
 margin-bottom:10px;
@@ -16,12 +16,14 @@ interface Idraggablecard{
 }
 
 function Draggablecard({todo,index} : Idraggablecard){
-      console.log(todo, "has been rendered")
+     
     return(
        
         <Draggable key={todo} draggableId={todo} index={index}>
-        {(magic)=>
-        <Card ref={magic.innerRef}
+        {(magic,snapshot)=>
+        <Card 
+        isDragging={snapshot.isDragging}
+        ref={magic.innerRef}
          {...magic.dragHandleProps}  
          {...magic.draggableProps}>  
                  {todo}

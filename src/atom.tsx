@@ -6,7 +6,7 @@ interface Itodostate {
 export const todostate = atom<Itodostate>({
     key: "todo",
     default : {
-        todo:["a", "b", "c", "d", "e", "f"],
+        "to do":["a", "b", "c", "d", "e", "f"],
         doing:["q"],
         done:["w"]
     }
