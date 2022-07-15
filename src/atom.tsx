@@ -1,13 +1,21 @@
 import {selector,atom} from "recoil";
+
+
+
+export interface Itodo{
+    text : string,
+    id : number;
+}
+
 interface Itodostate {
-    [key:string] : string[];
+    [key:string] : Itodo[];
 }
 
 export const todostate = atom<Itodostate>({
     key: "todo",
     default : {
-        "to do":["a", "b", "c", "d", "e", "f"],
-        doing:["q"],
-        done:["w"]
+        "to do":[],
+        doing:[],
+        done:[]
     }
 });

@@ -1,8 +1,8 @@
-import { useRef } from "react";
+import { useForm } from "react-hook-form";
 import { Droppable  } from "react-beautiful-dnd";
 import styled from "styled-components";
 import Draggablecard from "./Draggablecard";
-
+import {Itodo} from "../atom";
 
 
 const Wrapper = styled.div`
@@ -27,34 +27,45 @@ flex-grow: 1;
 transition:background-color 0.3s ease-in-out;
 border-radius: 10px;
 padding: 10px;
-`
+`;
+
+const Form = styled.form`
+width: 100%;
+input {
+  width: 100%;
+}
+`;
 
 interface Iboards{
-    todos:string[];
+    todos:Itodo[];
     boardid:string;
 }
 interface Iarea{
   isDraggingFromThis: boolean;
   isDraggingOver: boolean;
 }
-
+interface Iform{
+  todo : string;
+}
 
 function Boards({todos,boardid}:Iboards){
   
-  const inputref = useRef<HTMLInputElement>(null);
-  
-  const onclick =()=>{
-    inputref.current?.focus();
-    setTimeout(() => {
-      inputref.current?.blur()
-    }, 5000);
-  };
+  const {register,setValue,handleSubmit} = useForm<Iform>();
+  const onvalid = (data: Iform)=>{
+    console.log(data);
+    setValue("todo","")
+  }
   
     return(
         <Wrapper>
           <Cardname>{boardid}</Cardname>
-          <input ref={inputref} placeholder="add please" />
-          <button onClick={onclick}>add</button>
+          <Form onSubmit={handleSubmit(onvalid)}>
+          <input 
+          {...register("todo",{required:true})}
+          type="text" placeholder={`add task ${boardid}`} />
+          <button>add</button>
+          </Form>
+        
          <Droppable droppableId={boardid}>
       {(magic,snapshot) => 
         <Area isDraggingOver={snapshot.isDraggingOver} 
@@ -63,7 +74,11 @@ function Boards({todos,boardid}:Iboards){
                 {...magic.droppableProps}>
                
              {todos.map((todo,index)=>(
-               <Draggablecard key={todo} todo={todo} index={index} />
+               <Draggablecard 
+               key={todo.id} 
+               todoid={todo.id} 
+               index={index} 
+               todotext={todo.text}/>
             ))}
           {magic.placeholder}
         </Area>}

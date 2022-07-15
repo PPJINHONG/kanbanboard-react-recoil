@@ -11,22 +11,23 @@ margin-bottom:10px;
 `;
 
 interface Idraggablecard{
-    todo:string;
+    todoid: number,
+    todotext:string,
     index : number;
 }
 
-function Draggablecard({todo,index} : Idraggablecard){
+function Draggablecard({todotext,todoid,index} : Idraggablecard){
      
     return(
        
-        <Draggable key={todo} draggableId={todo} index={index}>
+        <Draggable key={todoid} draggableId={todoid+""} index={index}>
         {(magic,snapshot)=>
         <Card 
         isDragging={snapshot.isDragging}
         ref={magic.innerRef}
          {...magic.dragHandleProps}  
          {...magic.draggableProps}>  
-                 {todo}
+                 {todotext}
          </Card>}
           </Draggable>
         
