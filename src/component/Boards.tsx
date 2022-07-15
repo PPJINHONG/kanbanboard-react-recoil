@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import { Droppable  } from "react-beautiful-dnd";
 import styled from "styled-components";
 import Draggablecard from "./Draggablecard";
@@ -39,9 +40,21 @@ interface Iarea{
 
 
 function Boards({todos,boardid}:Iboards){
+  
+  const inputref = useRef<HTMLInputElement>(null);
+  
+  const onclick =()=>{
+    inputref.current?.focus();
+    setTimeout(() => {
+      inputref.current?.blur()
+    }, 5000);
+  };
+  
     return(
         <Wrapper>
           <Cardname>{boardid}</Cardname>
+          <input ref={inputref} placeholder="add please" />
+          <button onClick={onclick}>add</button>
          <Droppable droppableId={boardid}>
       {(magic,snapshot) => 
         <Area isDraggingOver={snapshot.isDraggingOver} 
