@@ -10,6 +10,19 @@ background-color: ${prop=>prop.isDragging ? "red" : "white"};
 padding: 10px;
 text-align: center;
 margin-bottom:10px;
+display: flex;
+justify-content: space-between;
+`;
+const Button = styled.button`
+
+border-radius: 100%;
+border-style: none;
+background-color:transparent;
+
+`;
+const Span = styled.span`
+width: 50%;
+
 `;
 
 interface Idraggablecard{
@@ -52,8 +65,8 @@ function Draggablecard({boardid,todotext,todoid,index} : Idraggablecard){
         ref={magic.innerRef}
          {...magic.dragHandleProps}  
          {...magic.draggableProps}>  
-                 {todotext}
-                 <button onClick={deletefn}>delete</button>
+                 <Span>{todotext}</Span>
+                 <Button onClick={deletefn}>X</Button>
          </Card>}
           </Draggable>
         

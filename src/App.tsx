@@ -8,18 +8,19 @@ import Boards from './component/Boards';
 
 const Wrapper = styled.div`
 display: flex;
-max-width: 500px;
+max-width: 800px;
 margin: 0 auto;
 justify-items: center;
 align-items: center;
 height: 100vh;
+border: 0px;
 
 `;
 const Boardwrapper = styled.div`
 display: grid;
 grid-template-columns: repeat(3,1fr);
 width: 100%;
-
+border: 0px;
 `;
 
 function App() {

@@ -7,11 +7,10 @@ import { useSetRecoilState } from "recoil";
 
 
 const Wrapper = styled.div`
-min-height: 300px;
+min-height: 400px;
 margin: 5px;
-
 border-radius: 10px;
-border: 0.5px solid gray;
+border: 0.3px solid gray;
 background-color: whitesmoke;
 display: flex;
 flex-direction: column;
@@ -20,13 +19,14 @@ flex-direction: column;
 const Cardname =styled.div`
 text-align: center;
 font-size: 20px;
-margin-bottom: 50px;
+padding-top: 30px;
+padding-bottom: 30px;
 `
 const Area = styled.div<Iarea>`
-background-color: ${prop => prop.isDraggingOver ? "pink" : prop.isDraggingFromThis ?  "black": "blue"};
+background-color: ${prop => prop.isDraggingOver ? "pink" : prop.isDraggingFromThis ?  "gray": "whitesmoke"};
 flex-grow: 1;
 transition:background-color 0.3s ease-in-out;
-border-radius: 10px;
+
 padding: 10px;
 `;
 
@@ -35,6 +35,11 @@ width: 100%;
 input {
   width: 100%;
 }
+`;
+const Button =styled.button`
+width: 100%;
+border: 1px solid gray;
+background-color: transparent;
 `;
 
 interface Iboards{
@@ -75,7 +80,7 @@ function Boards({todos,boardid}:Iboards){
           <input 
           {...register("todo",{required:true})}
           type="text" placeholder={`add task ${boardid}`} />
-          <button>add</button>
+          <Button>add</Button>
           </Form>
         
          <Droppable droppableId={boardid}>
