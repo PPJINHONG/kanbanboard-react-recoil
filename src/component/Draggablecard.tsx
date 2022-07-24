@@ -53,7 +53,6 @@ function Draggablecard({boardid,todotext,todoid,index} : Idraggablecard){
             
           };
 
-
     })
 }
     return(
